@@ -208,6 +208,8 @@ Azure Bot Service es un servicio de Azure que permite a los desarrolladores crea
 
 14. Agregamos un ultimo secreto llamado PROJECT_NAME con el nombre de nuestro proyecto, que para efectos prácticos puede ser "YourBot". ![alt text](images/image-a46.png)
 
+15. En el web app es importante asignar el User Assigned Managed Identity que creamos en el Bot Service, para esto vamos a la sección de "Identity" y damos clic en "User Assigned" ![alt text](images/image-a47.png)
+
 Con esto ya tenemos configurado el despliegue continuo de nuestro Bot en Azure Bot Service. Vamos a codificar nuestro Bot.
 
 ### Construcción del Bot
@@ -288,23 +290,24 @@ Para este escenario necesitamos agregar inteligencia a nuestro bot, por lo que n
 
 1. Donde le vamos a agregar inteligencia es en el archivo de Bots/YourBot.cs, por lo que procedemos a abrirlo
 
-2. En GH Copilot Chat indicamos el siguiente prompt : "Como instalar la librería de Azure y Azure.AI.OpenAI", y seguimos el procedimiento indicado en la consola ( es importante que estemos en la carpeta del proyecto usando el comando "cd YourBot") ![alt text](images/image-2799.png)
+2. En GH Copilot Chat indicamos el siguiente prompt : "Como instalar la librería de Azure y Azure.AI.OpenAI esta ultima en modo prerelease
+3. ", y seguimos el procedimiento indicado en la consola ( es importante que estemos en la carpeta del proyecto usando el comando "cd YourBot") ![alt text](images/image-2799.png)
 
-3. Vamos a usar el encadenamiento de prompts para mejorar la eficiencia de las recomendaciones del Gh Copilot in lines en los archivos que estamos trabajando.  En la linea 12 damos un salto de linea y ponemos un comentario con el siguiente prompt : "Generar 2 propiedades para la llave y el endpoint de Azure OpenAI, con un valor predeterminado"
+4. Vamos a usar el encadenamiento de prompts para mejorar la eficiencia de las recomendaciones del Gh Copilot in lines en los archivos que estamos trabajando.  En la linea 12 damos un salto de linea y ponemos un comentario con el siguiente prompt : "Generar 2 propiedades para la llave y el endpoint de Azure OpenAI, con un valor predeterminado"
 
-4. Vamos al recurso de Azure OpenAI y buscamos Key 1 y endpoint en la sección "Keys and EndPoint",  procedemos a reemplazar los siguientes valores en el código:
+5. Vamos al recurso de Azure OpenAI y buscamos Key 1 y endpoint en la sección "Keys and EndPoint",  procedemos a reemplazar los siguientes valores en el código:
    - Key de Azure OpenAI = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
    - Endpoint de Azure OpenAI = "https://xxxxxxxxxxxx.openai.azure.com/"
 
-5. Necesitamos generar un método para invocar a OpenAI por lo que ponemos un comentario en la linea 16 con el siguiente prompt : "#Generar un método asíncrono que regrese un string y que reciba como parámetro un texto, el método esta vacío" ![alt text](images/image-2999.png)
+6. Necesitamos generar un método para invocar a OpenAI por lo que ponemos un comentario en la linea 16 con el siguiente prompt : "Generar un método asíncrono que regrese un string y que reciba como parámetro un texto, el método esta vacío" ![alt text](images/image-2999.png)
 
-6. Damos un salto de linea en la linea 19 y escribimos el siguiente prompt como comentario para generar la llave para acceder al cliente de Azure Open AI: "#generar un AzureKeyCredential con la llave de OpenAI"![alt text](images/image-3099.png)
+7. Damos un salto de linea en la linea 19 y escribimos el siguiente prompt como comentario para generar la llave para acceder al cliente de Azure Open AI: "generar un AzureKeyCredential con la llave de OpenAI"![alt text](images/image-3099.png)
 
-7. Damos un salto de linea y escribimos el siguiente prompt como comentario = " #inicializar el cliente de OpenAIClient con el endpoint de OpenAI y el AzureKeyCredential" ![alt text](images/image-3199.png)
+8. Damos un salto de linea y escribimos el siguiente prompt como comentario = " inicializar el cliente de OpenAIClient con el endpoint de OpenAI y el AzureKeyCredential" ![alt text](images/image-3199.png)
 
-8. Ingresamos el siguiente comentario para inicializar las opciones de nuestro cliente "Inicializar las opciones de ChatCompletionsOptions de forma inline indicando el parámetro de DeploymentName de tipo gpt-35-turbo y Messages recibido de la variable text de tipo ChatRequestUserMessage. Siguiendo el formato new Class { Property = Value }" ![alt text](images/image-3299.png)
+9. Ingresamos el siguiente comentario para inicializar las opciones de nuestro cliente "Inicializar las opciones de ChatCompletionsOptions de forma inline indicando el parámetro de DeploymentName de tipo gpt-35-turbo y Messages recibido de la variable text de tipo ChatRequestUserMessage. Siguiendo el formato new Class { Property = Value }" ![alt text](images/image-3299.png)
 
-9. Si existe algún error pueden usar el siguiente código:
+10. Si existe algún error pueden usar el siguiente código:
             "var options = new ChatCompletionsOptions
             {
                   DeploymentName="gpt-35-turbo",
@@ -313,16 +316,24 @@ Para este escenario necesitamos agregar inteligencia a nuestro bot, por lo que n
                   },                
              };"
 
-10. Invocamos el método y ponemos el siguiente comentario: "Invocar el método GetChatCompletionsAsync y regresar la respuesta de la llamada" ![alt text](images/image-3399.png)
+11. Invocamos el método y ponemos el siguiente comentario: "Invocar el método GetChatCompletionsAsync y regresar la respuesta de la llamada" ![alt text](images/image-3399.png)
 
-11. Regresar la respuesta es el siguiente paso, por lo que ponemos el siguiente comentario: "regresar el texto de la respuesta de Choices" ![alt text](images/image-3499.png)
+12. Regresar la respuesta es el siguiente paso, por lo que ponemos el siguiente comentario: "regresar el texto de la respuesta de Choices" ![alt text](images/image-3499.png)
 
-12. En el método de OnMessageActivityAsync eliminamos la linea donde esta la variable de replytext y ponemos el siguiente comentario: "Declarar una variable de tipo string llamada replyText y asignarle el valor de la respuesta de GetOpenAIResponseAsync con el parámetro de texto de la actividad recibida" el nombre del método puede variar usa el que te genero anteriormente. ![alt text](images/image-3599.png)
+13. En el método de OnMessageActivityAsync eliminamos la linea donde esta la variable de replytext y ponemos el siguiente comentario: "Declarar una variable de tipo string llamada replyText y asignarle el valor de la respuesta de GetOpenAIResponseAsync con el parámetro de texto de la actividad recibida" el nombre del método puede variar usa el que te genero anteriormente. ![alt text](images/image-3599.png)
 
-13. Procedemos a hacer el commit y el push para que se despliegue el bot. ![alt text](images/image-3699.png)
+14. Procedemos a hacer el commit y el push para que se despliegue el bot. ![alt text](images/image-3699.png)
 
 ### Integración del bot con Microsoft Teams
 
-Una vez desplegado el Bot, procedemos a instalarlo, esto lo podemos hacer dando clic en el siguiente enlace: "https://teams.microsoft.com/l/chat/0/0?users=28:82a6641b-2db0-470a-bd39-8569fb753906". El cual obtuvimos del bot de azure. ![alt text](images/image-3799.png)
+Una vez desplegado el Bot, procedemos a probarlo, para esto vamos al recurso de azure bot, e interactuamos con el en la opción de Test in Web Chat ![alt text](images/image-a48.png)
 
-Nos vamos a Teams, puedes ingresar el prompt que corresponda al documento que elegiste.
+Para instalarlo en MS Teams , en el recurso de Azure Bot, nos vamos a Channels -> Microsoft Teams ![alt text](images/image-a49.png)
+
+Indicamos que estamos de acuerdo con los términos del servicio ![alt text](images/image-a50.png)
+
+En la sección de Messaging indicamos que es para "Microsoft Teams Commercial" y damos clic en "Apply" y despues en "close"  ![alt text](images/image-a51.png)
+
+En channels seleccionamos "Open in Teams" ![alt text](images/image-a52.png)
+
+Nos vamos a Teams, puedes ingresar el prompt que corresponda al documento que elegiste. ![alt text](images/image-a53.png)
