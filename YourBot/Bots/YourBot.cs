@@ -1,5 +1,6 @@
 ﻿// Generated with EchoBot .NET Template version v4.22.0
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
