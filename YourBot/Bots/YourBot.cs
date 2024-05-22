@@ -27,13 +27,13 @@ namespace EchoBot.Bots
             var client = new OpenAIClient(new Uri(openAIEndpoint), credential);
             
             // Inicializar las opciones de ChatCompletionsOptions de forma inline indicando el parámetro de DeploymentName de tipo gpt-35-turbo y Messages recibido de la variable text de tipo ChatRequestUserMessage. Siguiendo el formato new Class { Property = Value }
-            var options = new ChatCompletionsOptions("gpt-35-turbo", new ChatRequestUserMessage(text));
+            var options = new ChatCompletionsOptions { DeploymentName= "gpt-35-turbo", Messages = {new ChatRequestUserMessage(text)}};
             
             // Invocar el método GetChatCompletionsAsync y regresar la respuesta de la llamada
             var response = await client.GetChatCompletionsAsync(options);
 
             // regresar el texto de la respuesta de Choices
-            return response.Choices[0].Message.Content;
+            return response.Value.Choices[0].Message.Content;
         }           
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
