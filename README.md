@@ -64,7 +64,7 @@ Estos bots se pueden personalizar y escalar según las necesidades específicas 
 En la guía estamos planteando un bot relacionado con Buceo, pero es recomendable que el escenario lo relaciones con la industria de tu escenario de negocio.
 
 Buscamos habilitar el siguiente escenario técnico:
-"aquí va la imagen"
+![alt text](images/image-a55.png)
 
 
 ## Prerequisitos
@@ -290,8 +290,8 @@ Para este escenario necesitamos agregar inteligencia a nuestro bot, por lo que n
 
 1. Donde le vamos a agregar inteligencia es en el archivo de Bots/YourBot.cs, por lo que procedemos a abrirlo
 
-2. En GH Copilot Chat indicamos el siguiente prompt : "Como instalar la librería de Azure y Azure.AI.OpenAI esta ultima en modo prerelease
-3. ", y seguimos el procedimiento indicado en la consola ( es importante que estemos en la carpeta del proyecto usando el comando "cd YourBot") ![alt text](images/image-2799.png)
+2. En GH Copilot Chat indicamos el siguiente prompt : "Como instalar la librería de Azure y Azure.AI.OpenAI esta ultima en modo prerelease" (Importante agregar el using correspondiente "Azure.AI.OpenAI" y los que falten)
+3. Seguimos el procedimiento indicado en la consola ( es importante que estemos en la carpeta del proyecto usando el comando "cd YourBot") ![alt text](images/image-2799.png)
 
 4. Vamos a usar el encadenamiento de prompts para mejorar la eficiencia de las recomendaciones del Gh Copilot in lines en los archivos que estamos trabajando.  En la linea 12 damos un salto de linea y ponemos un comentario con el siguiente prompt : "Generar 2 propiedades para la llave y el endpoint de Azure OpenAI, con un valor predeterminado"
 
@@ -321,8 +321,9 @@ Para este escenario necesitamos agregar inteligencia a nuestro bot, por lo que n
 12. Regresar la respuesta es el siguiente paso, por lo que ponemos el siguiente comentario: "regresar el texto de la respuesta de Choices" ![alt text](images/image-3499.png)
 
 13. En el método de OnMessageActivityAsync eliminamos la linea donde esta la variable de replytext y ponemos el siguiente comentario: "Declarar una variable de tipo string llamada replyText y asignarle el valor de la respuesta de GetOpenAIResponseAsync con el parámetro de texto de la actividad recibida" el nombre del método puede variar usa el que te genero anteriormente. ![alt text](images/image-3599.png)
+14. El código debe quedar de la siguiente forma: ![alt text](images/image-a54.png)
 
-14. Procedemos a hacer el commit y el push para que se despliegue el bot. ![alt text](images/image-3699.png)
+15. Procedemos a hacer el commit y el push para que se despliegue el bot. ![alt text](images/image-3699.png)
 
 ### Integración del bot con Microsoft Teams
 
