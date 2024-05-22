@@ -1,5 +1,4 @@
 ﻿// Generated with EchoBot .NET Template version v4.22.0
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
